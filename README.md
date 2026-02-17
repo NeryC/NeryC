@@ -64,6 +64,6 @@ I am passionate about building tech communities and sharing knowledge.
 </p>
 
 <p align="center">
-  <img src="./profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top Languages" width="48%" />
+  <img src="./profile-summary-card-output/tokyonight/3-stats.svg" alt="Top Languages" width="48%" />
   <img src="./profile-summary-card-output/tokyonight/1-repos-per-language.svg" alt="Productive Time" width="48%" />
 </p>

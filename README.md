@@ -47,7 +47,23 @@ I am passionate about building tech communities and sharing knowledge.
   <img src="https://github.com/NeryC/NeryC/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 </p>
 
-### ⚡ Quick Stats
-![Commits](https://img.shields.io/github/commit-activity/y/NeryC/NeryC?style=for-the-badge&color=blue&label=ACTIVITY)
-![Repos](https://img.shields.io/github/public-availability/NeryC/NeryC?style=for-the-badge&color=green&label=UPTIME)
-![Followers](https://img.shields.io/github/followers/NeryC?style=for-the-badge&logo=github&color=black)
+### 🚀 Career Stats (7+ Years)
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Experience-7%2B_Years-blue?style=for-the-badge&logo=awesomelists&logoColor=white" />
+  <img src="https://img.shields.io/badge/Focus-HealthTech_%26_Fintech-2ea44f?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/Architecture-AWS_%26_Next.js-232f3e?style=for-the-badge&logo=amazon-aws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Community-GDG_Organizer-4285F4?style=for-the-badge&logo=google&logoColor=white" />
+</div>
+
+---
+
+### 📈 Coding Habits
+<p align="center">
+  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top Languages" width="48%" />
+  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/3-productive-time.svg" alt="Productive Time" width="48%" />
+</p>

@@ -47,5 +47,7 @@ I am passionate about building tech communities and sharing knowledge.
   <img src="https://github.com/NeryC/NeryC/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 </p>
 
-### 🏆 Achievements
-[![Trophies](https://github-profile-trophy.vercel.app/?username=NeryC&theme=flat&no-frame=true&column=7)](https://github.com/ryo-ma/github-profile-trophy)
+### ⚡ Quick Stats
+![Commits](https://img.shields.io/github/commit-activity/y/NeryC/NeryC?style=for-the-badge&color=blue&label=ACTIVITY)
+![Repos](https://img.shields.io/github/public-availability/NeryC/NeryC?style=for-the-badge&color=green&label=UPTIME)
+![Followers](https://img.shields.io/github/followers/NeryC?style=for-the-badge&logo=github&color=black)

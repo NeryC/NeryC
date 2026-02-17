@@ -60,10 +60,10 @@ I am passionate about building tech communities and sharing knowledge.
 
 ### 📈 Coding Habits
 <p align="center">
-  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details" />
+  <img src="./profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile Details" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top Languages" width="48%" />
-  <img src="https://github.com/NeryC/NeryC/blob/master/profile-summary-card-output/tokyonight/3-productive-time.svg" alt="Productive Time" width="48%" />
+  <img src="./profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top Languages" width="48%" />
+  <img src="./profile-summary-card-output/tokyonight/3-productive-time.svg" alt="Productive Time" width="48%" />
 </p>

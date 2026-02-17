@@ -47,6 +47,9 @@ I am passionate about building tech communities and sharing knowledge.
   <img src="https://github.com/NeryC/NeryC/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 </p>
 
-<p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=NeryC&show_icons=true&theme=tokyonight&hide=stars" alt="NeryC's Stats" />
-</p>
+<div align="center">
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img height="180em" src="https://github-readme-stats.vercel.app/api?username=NeryC&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" />
+    <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=NeryC&layout=compact&theme=tokyonight&hide_border=true" />
+  </a>
+</div>

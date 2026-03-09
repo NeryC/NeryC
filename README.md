@@ -2,10 +2,11 @@
 [![GDG Asunción](https://img.shields.io/badge/Google_Developer_Group-Organizer-blue?style=for-the-badge&logo=google&logoColor=white)](https://gdg.community.dev/gdg-asuncion/)
 ## Senior Full-Stack Software Engineer
 
-I am a seasoned developer with **7+ years of experience** crafting robust web and mobile applications. Specializing in **Next.js**, **React Native**, and **AWS**, I build scalable systems for the Healthcare, Fintech, and Retail sectors.
+I am a seasoned developer with **7+ years of experience** crafting robust web and mobile applications. Specializing in **Next.js**, **React Native**, **AWS**, and **GCP**, I build scalable systems for the Healthcare, Fintech, and Retail sectors.
 
 - 🔭 **I’m currently working on:** High-performance healthcare platforms using **Next.js 15** and **React Native/Expo**.
 - 🏗️ **Architecture:** I love designing Service-Oriented Architectures (SOA) and implementing CI/CD pipelines.
+- ♿ **Accessibility:** Expert in implementing **a11y** best practices and ensuring **WCAG** compliance.
 - 🏃🏻‍♂️ **Fun fact:** I apply the same endurance logic to marathon running as I do to solving complex backend challenges.
 
 ---
@@ -14,9 +15,9 @@ I am a seasoned developer with **7+ years of experience** crafting robust web an
 
 | Frontend | Backend & Data | DevOps & Tools |
 | :--- | :--- | :--- |
-| ![React](https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white) ![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=next.js&logoColor=white) | ![Node.js](https://img.shields.io/badge/-Node.js-43853d?style=flat-square&logo=node.js&logoColor=white) ![Python](https://img.shields.io/badge/-Python-3776ab?style=flat-square&logo=python&logoColor=white) | ![AWS](https://img.shields.io/badge/-AWS-232f3e?style=flat-square&logo=amazon-aws&logoColor=white) ![Docker](https://img.shields.io/badge/-Docker-2496ed?style=flat-square&logo=docker&logoColor=white) |
-| ![React Native](https://img.shields.io/badge/-React_Native-45b8d8?style=flat-square&logo=react&logoColor=white) ![Expo](https://img.shields.io/badge/-Expo-000020?style=flat-square&logo=expo&logoColor=white) | ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white) ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white) | ![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) ![Vercel](https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white) |
-| ![Tailwind](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) ![TypeScript](https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white) | ![MobX](https://img.shields.io/badge/-MobX-FF9955?style=flat-square&logo=mobx&logoColor=white) ![Zustand](https://img.shields.io/badge/-Zustand-443E38?style=flat-square) | ![Sentry](https://img.shields.io/badge/-Sentry-362D59?style=flat-square&logo=sentry&logoColor=white) |
+| ![React](https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white) ![Next.js](https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=next.js&logoColor=white) ![Vue](https://img.shields.io/badge/-Vue.js-4FC08D?style=flat-square&logo=vue.js&logoColor=white) | ![Node.js](https://img.shields.io/badge/-Node.js-43853d?style=flat-square&logo=node.js&logoColor=white) ![Python](https://img.shields.io/badge/-Python-3776ab?style=flat-square&logo=python&logoColor=white) | ![AWS](https://img.shields.io/badge/-AWS-232f3e?style=flat-square&logo=amazon-aws&logoColor=white) ![GCP](https://img.shields.io/badge/-GCP-4285F4?style=flat-square&logo=google-cloud&logoColor=white) |
+| ![React Native](https://img.shields.io/badge/-React_Native-45b8d8?style=flat-square&logo=react&logoColor=white) ![Expo](https://img.shields.io/badge/-Expo-000020?style=flat-square&logo=expo&logoColor=white) ![Redux](https://img.shields.io/badge/-Redux-764ABC?style=flat-square&logo=redux&logoColor=white) | ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white) ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white) ![Contentful](https://img.shields.io/badge/-Contentful-2478CC?style=flat-square&logo=contentful&logoColor=white) | ![Docker](https://img.shields.io/badge/-Docker-2496ed?style=flat-square&logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) |
+| ![Tailwind](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) ![TypeScript](https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white) | ![MobX](https://img.shields.io/badge/-MobX-FF9955?style=flat-square&logo=mobx&logoColor=white) ![Zustand](https://img.shields.io/badge/-Zustand-443E38?style=flat-square) | ![Vercel](https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white) ![Sentry](https://img.shields.io/badge/-Sentry-362D59?style=flat-square&logo=sentry&logoColor=white) |
 
 ---
 
@@ -52,7 +53,7 @@ I am passionate about building tech communities and sharing knowledge.
 <div align="center">
   <img src="https://img.shields.io/badge/Experience-7%2B_Years-blue?style=for-the-badge&logo=awesomelists&logoColor=white" />
   <img src="https://img.shields.io/badge/Focus-HealthTech_%26_Fintech-2ea44f?style=for-the-badge&logo=react&logoColor=white" />
-  <img src="https://img.shields.io/badge/Architecture-AWS_%26_Next.js-232f3e?style=for-the-badge&logo=amazon-aws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Architecture-AWS,_GCP_%26_Next.js-232f3e?style=for-the-badge&logo=amazon-aws&logoColor=white" />
   <img src="https://img.shields.io/badge/Community-GDG_Organizer-4285F4?style=for-the-badge&logo=google&logoColor=white" />
 </div>
 

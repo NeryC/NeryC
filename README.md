@@ -1,11 +1,11 @@
 # Hi there, I'm Nery Cano! 👋
 [![GDG Asunción](https://img.shields.io/badge/Google_Developer_Group-Organizer-blue?style=for-the-badge&logo=google&logoColor=white)](https://gdg.community.dev/gdg-asuncion/)
 [![CV](https://img.shields.io/badge/Download_CV-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/14_7CkyVjmq_ILJ1jCBx5HTlJHiLkYjh1?usp=drive_link)
-## Senior Full-Stack Software Engineer
+## Senior Full-Stack Engineer | Next.js + AI/LLM · React Native · Open to Remote
 
-I am a seasoned developer with **7+ years of experience** crafting modern web applications. Expert in **Next.js**, **React**, **Node.js**, and **Python**, working with both MongoDB and SQL databases to deliver end-to-end solutions. Specializing in front-end architecture, inclusive design (WCAG), and user experience, with a **strong understanding of SEO strategies and web performance optimization**. A runner at heart, I bring dedication and strategic thinking to every technical challenge.
+I am a seasoned developer with **7+ years of experience** crafting modern web applications. Expert in **Next.js**, **React**, **Node.js**, and **Python**, working with both MongoDB and SQL databases to deliver end-to-end solutions. Specialized in **AI/LLM integrations (OpenAI, Anthropic, RAG)** and front-end architecture, inclusive design (WCAG), and user experience, with a **strong understanding of SEO strategies and web performance optimization**. A runner at heart, I bring dedication and strategic thinking to every technical challenge.
 
-- 🔭 **I'm currently working on:** High-performance healthcare platforms using **Next.js**, **React Native/Expo**, AI/ML & LLM integrations.
+- 🔭 **I'm currently working on:** **AdminRent**, my personal multi-service SaaS (Next.js + Flask + Flutter + a TypeScript microservice for Paraguay's SIFEN e-invoicing). Open to new remote roles.
 - 🤖 **AI-Powered Dev:** I leverage **Cursor**, **Claude Code**, and **Gemini CLI** to accelerate delivery and build smarter solutions.
 - ♿ **Accessibility:** Expert in implementing **a11y** best practices and ensuring **WCAG** compliance.
 - 🏃🏻‍♂️ **Fun fact:** I apply the same endurance logic to marathon running as I do to solving complex backend challenges.
@@ -27,18 +27,21 @@ I am a seasoned developer with **7+ years of experience** crafting modern web ap
 
 Even though most of my work is in **private enterprise repositories**, here is a summary of what I've engineered:
 
-* **Healthcare Platform – Jobsity (2025):** Led full-stack development of a clinician-facing patient monitoring system.
-    * *Tech:* Next.js, React Native, GraphQL, React Query, AWS Transcribe/Comprehend, AI/ML, OCR.
+* **Healthcare Platform – Jobsity · Senior Full-Stack Developer (Feb 2025 – Jan 2026):** Led full-stack development of a clinician-facing patient monitoring system for client Ebervetter.
+    * *Tech:* Next.js 15, React Native, GraphQL, React Query, AWS Transcribe/Comprehend, AI/ML, OCR.
     * *Impact:* Reduced documentation time by **60%** using voice-to-text medical entity extraction and LLM integration.
-* **Education Platform – Penguin Academy (2024):** Lead developer of the CodePro platform for coding bootcamps.
-    * *Tech:* Next.js, AWS, PostgreSQL, Vercel.
+* **Education Platform – Penguin Academy · Lead Developer, CodePro (May 2024 – Jan 2025):** Sole developer of the CodePro bootcamp platform (independent contractor).
+    * *Tech:* Next.js, AWS S3, PostgreSQL, Firebase, Cloudflare, Vercel, Heroku.
     * *Impact:* Enhanced engagement for **90+ students** with **99.9% uptime**.
-* **Retail E-Commerce – Jobsity (2023):** Enhanced UX and performance for high-traffic e-commerce sites (Hollister & Abercrombie & Fitch).
+* **Retail E-Commerce – Jobsity · Senior Full-Stack Developer (Apr 2023 – Jan 2024):** Performance and UX work on high-traffic storefronts for Hollister & Abercrombie & Fitch.
     * *Tech:* Next.js (SSR/SSG), React, Node.js, Contentful, Docker, React Testing Library, Tailwind CSS.
-* **Enterprise Maintenance – Kenility (2022):** Maintained and expanded core features of the ZenBusiness platform.
+* **Enterprise Maintenance – Kenility · Full-Stack Developer (Jan 2022 – Jan 2023):** Maintained and expanded core features of the **ZenBusiness** platform.
     * *Tech:* React, Next.js, Node.js, Docker, Tailwind CSS.
-* **Salesforce Ecosystem – Oktana (2018–2022):** Engineered enterprise solutions for international clients.
-    * *Tech:* Salesforce Apex, React Native, Electron, JavaScript frameworks.
+* **Crypto Fintech – Chiatk · Front-end Developer (May 2021 – Jan 2023):** Built secure landing pages and real-time content for a cryptocurrency fintech (independent contractor).
+    * *Tech:* React, Vue.js, Electron.
+* **Salesforce Ecosystem – Oktana Corporation · Full-Stack Engineer (Nov 2018 – Feb 2022):** Engineered enterprise solutions for international clients across web, mobile and desktop.
+    * *Tech:* Salesforce Apex, React, React Native, Electron, Webpack.
+* **Salesforce · Salesforce Contractor (Jan 2020 – Jan 2021):** Contractor engagement inside the Salesforce ecosystem during my Oktana tenure.
 
 ---
 

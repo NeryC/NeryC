@@ -42,6 +42,21 @@ Even though most of my work is in **private enterprise repositories**, here is a
 
 ---
 
+### 🧪 Personal Projects
+
+> *Built end-to-end on my own time to explore polyglot architectures, multi-service deployments, and country-specific compliance integrations.*
+
+* **AdminRent — Multi-tenant SaaS for residential property management** *(Personal Project · in progress)*
+    * *Scope:* Admins manage properties, tenants and rent collection from a web dashboard; residents pay, claim receipts and receive notifications from a mobile app; invoices are issued through Paraguay's SIFEN tax authority.
+    * *Architecture:* Polyglot multi-service — Next.js web dashboard, Flask REST API, Flutter mobile app, and an independent TypeScript microservice for electronic invoicing. Layered backend (`api / services / models / middleware`), Supabase Auth with JWT refreshed in a Next.js proxy/middleware, automatic Alembic migrations on release.
+    * *Web (admin):* **Next.js (App Router, Server Components), React, TypeScript, Tailwind, TanStack Query, Supabase SSR, Axios**.
+    * *API:* **Python · Flask, SQLAlchemy + Alembic, PostgreSQL, PyJWT, Flask-Limiter, Resend (transactional email), WeasyPrint (PDF receipts), OpenPyXL (Excel exports), Gunicorn**.
+    * *Mobile (residents):* **Flutter, Riverpod, Dio, Firebase Auth + FCM, sqflite (offline cache)**.
+    * *SIFEN microservice:* **Node.js + TypeScript, Express, PostgreSQL, SOAP, xml-crypto + node-forge (XML digital signing), Zod, node-cron, Docker** — integrates with Paraguay's electronic invoicing system.
+    * *DevOps:* Docker, Railway (separate services for API and SIFEN core), automated DB migrations on deploy, env-scoped configuration.
+
+---
+
 ### 🌟 Community & Leadership
 
 I am passionate about building tech communities and sharing knowledge.

@@ -1,6 +1,6 @@
 # Hi there, I'm Nery Cano! 👋
 [![GDG Asunción](https://img.shields.io/badge/Google_Developer_Group-Organizer-blue?style=for-the-badge&logo=google&logoColor=white)](https://gdg.community.dev/gdg-asuncion/)
-[![CV](https://img.shields.io/badge/Download_CV-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/14_7CkyVjmq_ILJ1jCBx5HTlJHiLkYjh1?usp=drive_link)
+[![CV](https://img.shields.io/badge/Download_CV-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/file/d/1_5A8e-xGep_Wd1lRP6r0sFIMgUQvmkQ9/view?usp=sharing)
 ## Senior Full-Stack Engineer | Next.js + AI/LLM · React Native · Open to Remote
 
 I am a seasoned developer with **7+ years of experience** crafting modern web applications. Expert in **Next.js**, **React**, **Node.js**, and **Python**, working with both MongoDB and SQL databases to deliver end-to-end solutions. Specialized in **AI/LLM integrations (OpenAI, Anthropic, RAG)** and front-end architecture, inclusive design (WCAG), and user experience, with a **strong understanding of SEO strategies and web performance optimization**. A runner at heart, I bring dedication and strategic thinking to every technical challenge.

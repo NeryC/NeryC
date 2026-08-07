@@ -496,10 +496,11 @@
   <div class="note">
     <span class="lbl">Verificá esto antes que nada</span>
     <p>
-      Todo el punto de arriba depende de que tu firma calcule la pérdida diaria <strong>desde el saldo de
-      apertura del día</strong>. Algunas firmas la calculan sobre el equity máximo alcanzado en el día: en ese
-      caso el piso <em>sube</em> con cada ganancia, el colchón de 9% no existe y la estrategia se rompe.
-      Es la primera cosa que hay que confirmar en el reglamento de cada empresa.
+      El <em>tamaño</em> del límite está claro: 5% en todas las cuentas, y vos operás a 4,5%. Lo que falta
+      confirmar es <strong>desde dónde se mide</strong>. Si se mide desde el saldo con el que abriste el día,
+      el colchón de 9% existe y el diagrama de arriba aplica. Si en cambio se mide desde el equity máximo
+      alcanzado durante el día, el piso <em>sube</em> con cada ganancia, el colchón no existe y toda la
+      estrategia se rompe. Es un dato distinto del 5% y hay que buscarlo aparte en el reglamento.
     </p>
   </div>
 
@@ -514,8 +515,8 @@
     <div class="rule">
       <span class="tag">Tope de pérdida diaria</span>
       <span class="val lim">4,5%</span>
-      <p>El límite real de la firma es 5%. Se opera a 4,5% para dejar medio punto de colchón por si se
-        desliza la ejecución.</p>
+      <p>El límite real es <b>5% en todas las cuentas</b>, sin excepción. Se opera a 4,5% para dejar medio
+        punto de colchón por si se desliza la ejecución.</p>
     </div>
     <div class="rule">
       <span class="tag">Riesgo y SL por operación</span>
@@ -733,10 +734,10 @@
             <td>Diego</td>
           </tr>
           <tr>
-            <td>Tope diario real de la firma</td>
+            <td>Tope diario real — igual en todas las cuentas</td>
             <td class="n">5,0%</td>
             <td class="n">$5.000</td>
-            <td>Diego</td>
+            <td>Confirmado</td>
           </tr>
           <tr>
             <td>Colchón por deslizamiento</td>

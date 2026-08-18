@@ -1,0 +1,970 @@
+<title>Cobertura entre cuentas — cómo funciona la estrategia de Diego</title>
+
+<style>
+  /* ── tokens: light (base) ─────────────────────────────────────────── */
+  :root {
+    --bg:      #EFF1F4;
+    --surf:    #FFFFFF;
+    --surf2:   #F6F7FA;
+    --ink:     #171A21;
+    --ink2:    #363C49;
+    --muted:   #5C6473;
+    --line:    #DBDFE7;
+    --line2:   #C4CAD5;
+    --gain:    #0C8A66;
+    --gain-bg: #E3F3ED;
+    --loss:    #C43B31;
+    --loss-bg: #FAE7E5;
+    --accent:  #9E6E14;
+    --acc-bg:  #F7EEDA;
+    --shadow:  0 1px 2px rgba(20,25,35,.05), 0 8px 24px -14px rgba(20,25,35,.28);
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --col: 68ch;
+    --wide: 1080px;
+  }
+
+  /* ── tokens: dark (system default, unless explicitly light) ───────── */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:      #0C0F15;
+      --surf:    #141821;
+      --surf2:   #1A1F2A;
+      --ink:     #E5E8EF;
+      --ink2:    #C3C9D6;
+      --muted:   #929AAA;
+      --line:    #262C38;
+      --line2:   #38404F;
+      --gain:    #3ECB9C;
+      --gain-bg: #10281F;
+      --loss:    #F07A70;
+      --loss-bg: #2B1614;
+      --accent:  #E0A744;
+      --acc-bg:  #2A2011;
+      --shadow:  0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+    }
+  }
+  /* ── tokens: dark (explicit toggle) ───────────────────────────────── */
+  :root[data-theme="dark"] {
+    --bg:      #0C0F15;
+    --surf:    #141821;
+    --surf2:   #1A1F2A;
+    --ink:     #E5E8EF;
+    --ink2:    #C3C9D6;
+    --muted:   #929AAA;
+    --line:    #262C38;
+    --line2:   #38404F;
+    --gain:    #3ECB9C;
+    --gain-bg: #10281F;
+    --loss:    #F07A70;
+    --loss-bg: #2B1614;
+    --accent:  #E0A744;
+    --acc-bg:  #2A2011;
+    --shadow:  0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── layout ───────────────────────────────────────────────────────── */
+  .wrap { max-width: var(--wide); margin: 0 auto; padding: 0 22px 80px; }
+  section { max-width: var(--col); margin: 0 auto; }
+  .breakout { max-width: var(--wide); margin-left: auto; margin-right: auto; }
+
+  /* ── masthead ─────────────────────────────────────────────────────── */
+  .mast {
+    border-bottom: 1px solid var(--line);
+    background: var(--surf);
+    padding: 54px 22px 44px;
+    margin-bottom: 56px;
+  }
+  .mast-in { max-width: var(--wide); margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5.4vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    margin: 0;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+  .thesis {
+    margin: 22px 0 0;
+    max-width: 54ch;
+    font-size: 1.16rem;
+    color: var(--ink2);
+    text-wrap: pretty;
+  }
+  .thesis strong { color: var(--ink); font-weight: 650; }
+  .mast-meta {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 26px;
+  }
+
+  /* ── headings ─────────────────────────────────────────────────────── */
+  h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    line-height: 1.16;
+    letter-spacing: -.024em;
+    font-weight: 750;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.06rem;
+    font-weight: 680;
+    letter-spacing: -.008em;
+    margin: 0 0 6px;
+  }
+  .sec-head { margin: 72px 0 26px; }
+  .sec-head .eyebrow { margin-bottom: 12px; }
+  .sec-head p { margin: 10px 0 0; color: var(--ink2); text-wrap: pretty; }
+  p { margin: 0 0 16px; text-wrap: pretty; }
+  a { color: var(--ink); text-underline-offset: 3px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .up   { color: var(--gain); }
+  .down { color: var(--loss); }
+  .lim  { color: var(--accent); }
+
+  /* ── figures ──────────────────────────────────────────────────────── */
+  figure {
+    margin: 34px 0;
+    background: var(--surf);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 26px 24px 20px;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  figure svg { display: block; width: 100%; max-width: 100%; height: auto; min-width: 480px; }
+  figcaption {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: .93rem;
+    line-height: 1.55;
+    color: var(--muted);
+    min-width: 480px;
+  }
+  figcaption b { color: var(--ink2); font-weight: 650; }
+
+  /* svg paint classes */
+  .d-t    { fill: var(--ink);   font-family: var(--mono); font-size: 12px; }
+  .d-tb   { fill: var(--ink);   font-family: var(--mono); font-size: 13px; font-weight: 700; }
+  .d-tm   { fill: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: .05em; }
+  .d-surf { fill: var(--surf2); stroke: var(--line2); stroke-width: 1; }
+  .s-line { stroke: var(--line2); stroke-width: 1.25; fill: none; }
+  .s-ink  { stroke: var(--ink2);  stroke-width: 1.5;  fill: none; }
+  .f-gain { fill: var(--gain); }   .s-gain { stroke: var(--gain); fill: none; stroke-width: 2; }
+  .f-loss { fill: var(--loss); }   .s-loss { stroke: var(--loss); fill: none; stroke-width: 2; }
+  .f-acc  { fill: var(--accent); } .s-acc  { stroke: var(--accent); fill: none; stroke-width: 2; }
+  .bg-gain { fill: var(--gain-bg); }
+  .bg-loss { fill: var(--loss-bg); }
+  .bg-acc  { fill: var(--acc-bg); }
+  .o-gain  { fill: none; stroke: var(--gain); stroke-width: 1.5; }
+  .o-loss  { fill: none; stroke: var(--loss); stroke-width: 1.5; }
+  .f-line2 { fill: var(--line2); }
+  .d-big   { fill: var(--accent); font-family: var(--mono); font-size: 34px; font-weight: 700; }
+
+  /* ── rule cards ───────────────────────────────────────────────────── */
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+    gap: 14px;
+    margin: 30px 0;
+  }
+  .rule {
+    background: var(--surf);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 18px 18px 16px;
+  }
+  .rule .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .rule .val {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.62rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .rule p { margin: 0; font-size: .94rem; line-height: 1.5; color: var(--ink2); }
+
+  /* ── table ────────────────────────────────────────────────────────── */
+  .tablewrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surf);
+    margin: 28px 0;
+  }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+  thead th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surf2);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.n b { font-weight: 700; }
+
+  /* ── steps (real sequences only) ──────────────────────────────────── */
+  ol.steps { list-style: none; counter-reset: s; margin: 26px 0; padding: 0; }
+  ol.steps > li {
+    counter-increment: s;
+    position: relative;
+    padding: 0 0 22px 52px;
+    border-left: 1px solid var(--line);
+    margin-left: 15px;
+  }
+  ol.steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(s);
+    position: absolute;
+    left: -15px; top: -2px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--surf);
+    border: 1px solid var(--line2);
+    color: var(--ink2);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  ol.steps > li > p { margin: 0 0 8px; }
+
+  /* ── callouts ─────────────────────────────────────────────────────── */
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--acc-bg);
+    border-radius: 0 8px 8px 0;
+    padding: 15px 18px;
+    margin: 26px 0;
+    font-size: .96rem;
+    line-height: 1.55;
+    color: var(--ink2);
+  }
+  .note .lbl {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* ── checklist ────────────────────────────────────────────────────── */
+  ul.check { list-style: none; margin: 26px 0; padding: 0; display: grid; gap: 10px; }
+  ul.check li {
+    background: var(--surf);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 13px 16px 13px 46px;
+    position: relative;
+    font-size: .97rem;
+    line-height: 1.5;
+  }
+  ul.check li::before {
+    content: "";
+    position: absolute;
+    left: 16px; top: 16px;
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--line2);
+    border-radius: 3px;
+  }
+  ul.check li b { font-weight: 660; }
+
+  footer {
+    max-width: var(--col);
+    margin: 80px auto 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: .03em;
+    color: var(--muted);
+  }
+
+  @media (max-width: 620px) {
+    body { font-size: 16px; }
+    .mast { padding: 38px 20px 32px; }
+    figure { padding: 18px 14px 14px; border-radius: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="eyebrow">Cobertura entre cuentas · resumen del chat del 7 de agosto</p>
+    <h1>El mercado se cancela. Las reglas del challenge, no.</h1>
+    <p class="thesis">
+      Comprás el mismo instrumento en una cuenta y lo vendés en otra. Lo que gana una lo pierde la otra:
+      a nivel mercado el resultado es cero. Pero el challenge <strong>te limita cuánto podés perder por día
+      y no te limita cuánto podés ganar</strong>. Esa única asimetría es toda la estrategia.
+    </p>
+    <div class="mast-meta">
+      <span>Instrumento · US100 (NASDAQ)</span>
+      <span>SL · 2% por operación</span>
+      <span>Tope diario · 4,5%</span>
+      <span>Mínimo · 3 cuentas, 3 empresas</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ══ 1. La asimetría ═══════════════════════════════════════════ -->
+  <section class="sec-head" style="margin-top:0">
+    <p class="eyebrow">La idea</p>
+    <h2>Una operación, dos resultados que no valen lo mismo</h2>
+    <p>
+      Abrís la misma operación en dos cuentas, en direcciones opuestas y con el mismo riesgo en dólares.
+      El precio se mueve para un lado. Una cuenta sube, la otra baja — pero la que baja choca contra una
+      pared a −4,5% y la que sube no choca contra nada.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 760 430" role="img"
+         aria-label="Dos cuentas con la misma operación en direcciones opuestas: la que pierde se detiene en el tope diario de 4,5%, la que gana sigue subiendo hasta el objetivo de fase 1 de 8%.">
+      <defs>
+        <marker id="f1-up" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="7" markerHeight="7" orient="auto">
+          <polygon points="5,0 10,10 0,10" class="f-gain"/>
+        </marker>
+      </defs>
+
+      <text x="380" y="24" text-anchor="middle" class="d-tm">MISMO INSTRUMENTO · MISMO RIESGO EN $ · LADOS OPUESTOS</text>
+
+      <!-- objetivo -->
+      <line x1="70" y1="70" x2="700" y2="70" class="s-gain" stroke-dasharray="6 5" stroke-width="1.5"/>
+      <text x="706" y="66" class="d-tm f-gain">OBJETIVO</text>
+      <text x="706" y="80" class="d-tm f-gain">FASE 1</text>
+
+      <!-- cero -->
+      <line x1="70" y1="230" x2="700" y2="230" class="s-line"/>
+
+      <!-- tope -->
+      <line x1="70" y1="320" x2="700" y2="320" class="s-acc" stroke-dasharray="6 5" stroke-width="1.5"/>
+      <text x="706" y="316" class="d-tm f-acc">TOPE</text>
+      <text x="706" y="330" class="d-tm f-acc">DIARIO</text>
+
+      <!-- eje -->
+      <text x="58" y="74"  text-anchor="end" class="d-t f-gain">+8,0%</text>
+      <text x="58" y="234" text-anchor="end" class="d-t">0,0%</text>
+      <text x="58" y="324" text-anchor="end" class="d-t f-acc">−4,5%</text>
+
+      <!-- CUENTA A: pierde -->
+      <rect x="190" y="230" width="100" height="90" class="bg-loss"/>
+      <rect x="190" y="230" width="100" height="90" class="o-loss"/>
+      <line x1="180" y1="320" x2="300" y2="320" class="s-acc" stroke-width="4"/>
+      <text x="240" y="278" text-anchor="middle" class="d-tb f-loss">−4,5%</text>
+      <text x="240" y="346" text-anchor="middle" class="d-tb">CUENTA A</text>
+      <text x="240" y="364" text-anchor="middle" class="d-tm">EMPRESA 1 · COMPRA</text>
+      <text x="240" y="392" text-anchor="middle" class="d-tm f-acc">SE FRENA ACÁ</text>
+      <text x="240" y="408" text-anchor="middle" class="d-tm f-acc">NO PUEDE PERDER MÁS HOY</text>
+
+      <!-- CUENTA B: gana -->
+      <rect x="470" y="70" width="100" height="160" class="bg-gain"/>
+      <rect x="470" y="70" width="100" height="160" class="o-gain"/>
+      <line x1="520" y1="70" x2="520" y2="42" class="s-gain" marker-end="url(#f1-up)"/>
+      <text x="520" y="156" text-anchor="middle" class="d-tb f-gain">+8,0%</text>
+      <text x="520" y="346" text-anchor="middle" class="d-tb">CUENTA B</text>
+      <text x="520" y="364" text-anchor="middle" class="d-tm">EMPRESA 2 · VENTA</text>
+      <text x="520" y="392" text-anchor="middle" class="d-tm f-gain">NADA LA FRENA</text>
+      <text x="520" y="408" text-anchor="middle" class="d-tm f-gain">NO HAY TOPE DE GANANCIA</text>
+    </svg>
+    <figcaption>
+      <b>La pérdida tiene techo; la ganancia no.</b> Las dos cuentas hacen exactamente lo mismo con signo
+      contrario, pero el reglamento solo le pone una pared a una de las dos. Todo lo que sigue es aprovechar
+      esa pared: dejar que la cuenta perdedora llegue al límite y seguir empujando a la ganadora con otra cuenta.
+    </figcaption>
+  </figure>
+
+  <!-- ══ 2. El margen ══════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">La segunda asimetría</p>
+    <h2>Ganar temprano no solo suma: te agranda el colchón</h2>
+    <p>
+      Esto es lo que Diego explicó cuando dijo <em>«la otra tiene 4,5% de profit del día más otro 4,5%
+      disponible para perder»</em>. El tope diario se mide desde el saldo con el que <strong>abriste el día</strong>,
+      no desde donde estás ahora. Si ya vas +4,5%, tenés 9% de recorrido antes de tocar la línea.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 760 300" role="img"
+         aria-label="El tope de pérdida diaria es una línea fija bajo el saldo de apertura, así que una cuenta que ya ganó 4,5% en el día dispone de 9% de recorrido antes de tocarla.">
+      <defs>
+        <marker id="f2-a" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <polygon points="5,0 10,10 0,10" class="f-acc"/>
+        </marker>
+      </defs>
+
+      <!-- líneas de referencia -->
+      <line x1="88" y1="150" x2="700" y2="150" class="s-line" stroke-dasharray="5 5"/>
+      <text x="80" y="146" text-anchor="end" class="d-tm">0,0%</text>
+      <text x="80" y="162" text-anchor="end" class="d-tm">APERTURA</text>
+
+      <line x1="88" y1="220" x2="700" y2="220" class="s-acc" stroke-width="2.5"/>
+      <text x="80" y="217" text-anchor="end" class="d-tm f-acc">−4,5%</text>
+      <text x="80" y="233" text-anchor="end" class="d-tm f-acc">LÍNEA FIJA</text>
+
+      <!-- recorrido del equity -->
+      <polyline points="115,150 190,126 255,140 330,104 410,116 500,82 585,80"
+                class="s-gain" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="585" cy="80" r="4.5" class="f-gain"/>
+      <text x="585" y="66" text-anchor="middle" class="d-tb f-gain">+4,5%</text>
+
+      <!-- medida izquierda: al abrir -->
+      <line x1="120" y1="152" x2="120" y2="218" class="s-acc" stroke-width="1.5"
+            marker-start="url(#f2-a)" marker-end="url(#f2-a)"/>
+      <text x="120" y="252" text-anchor="middle" class="d-tb f-acc">4,5%</text>
+      <text x="120" y="270" text-anchor="middle" class="d-tm">DE MARGEN AL ABRIR</text>
+
+      <!-- medida derecha: con ganancia -->
+      <line x1="648" y1="82" x2="648" y2="218" class="s-acc" stroke-width="1.5"
+            marker-start="url(#f2-a)" marker-end="url(#f2-a)"/>
+      <text x="648" y="252" text-anchor="middle" class="d-tb f-acc">9,0%</text>
+      <text x="648" y="270" text-anchor="middle" class="d-tm">CON +4,5% ENCIMA</text>
+
+      <text x="380" y="26" text-anchor="middle" class="d-tm">UN MISMO DÍA DE OPERATIVA →</text>
+    </svg>
+    <figcaption>
+      <b>El techo sube con vos; el piso se queda quieto.</b> Por eso la cuenta ganadora casi nunca es la que
+      se frena: cuanto más gana, más aguanta. Es la que le permite seguir operando cuando le mandás cuentas
+      nuevas en contra.
+    </figcaption>
+  </figure>
+
+  <div class="note">
+    <span class="lbl">Verificá esto antes que nada</span>
+    <p>
+      El <em>tamaño</em> del límite está claro: 5% en todas las cuentas, y vos operás a 4,5%. Lo que falta
+      confirmar es <strong>desde dónde se mide</strong>. Si se mide desde el saldo con el que abriste el día,
+      el colchón de 9% existe y el diagrama de arriba aplica. Si en cambio se mide desde el equity máximo
+      alcanzado durante el día, el piso <em>sube</em> con cada ganancia, el colchón no existe y toda la
+      estrategia se rompe. Es un dato distinto del 5% y hay que buscarlo aparte en el reglamento.
+    </p>
+  </div>
+
+  <!-- ══ 3. Las reglas ═════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">Los parámetros</p>
+    <h2>Lo que queda fijo en cada operación</h2>
+    <p>Estos números no se negocian trade a trade. Se definen una vez y se respetan.</p>
+  </section>
+
+  <div class="rules breakout">
+    <div class="rule">
+      <span class="tag">Tope de pérdida diaria</span>
+      <span class="val lim">4,5%</span>
+      <p>El límite real es <b>5% en todas las cuentas</b>, sin excepción. Se opera a 4,5% para dejar medio
+        punto de colchón por si se desliza la ejecución.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Riesgo y SL por operación</span>
+      <span class="val">2%</span>
+      <p>Cada trade arriesga 2% de la cuenta y el stop loss se coloca en ese mismo 2%. Entran dos trades
+        perdedores por día antes de tocar el tope.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Instrumento</span>
+      <span class="val">US100</span>
+      <p>NASDAQ, porque tiene menos spread. Cada punto de spread lo pagás dos veces — en la cuenta compradora
+        y en la vendedora.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Empresas distintas</span>
+      <span class="val">Siempre</span>
+      <p>Nunca dos cuentas de la misma empresa una contra la otra. Es la regla que Diego marcó como
+        innegociable.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Pares posibles</span>
+      <span class="val">Cualquiera</span>
+      <p>No importa qué cuenta va contra cuál, ni quién compra y quién vende. Lo único que importa es que
+        sean de firmas distintas.</p>
+    </div>
+    <div class="rule">
+      <span class="tag">Lotaje</span>
+      <span class="val">Verificado</span>
+      <p>Nunca de memoria. Orden limit primero, leer el riesgo en dólares, recién ahí ejecutar. Ver la
+        sección siguiente.</p>
+    </div>
+  </div>
+
+  <!-- ══ 4. Lotaje ═════════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">El error caro</p>
+    <h2>Un lote no es un lote</h2>
+    <p>
+      Diego lo dijo directo: <em>«a veces 1 lote es = a 10 lotes del otro»</em>. Dos brokers pueden llamar
+      «1.00 lote» a contratos con valor de punto completamente distinto. Si no lo verificás, no estás
+      cubierto — estás con una posición direccional disfrazada de cobertura.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 760 260" role="img"
+         aria-label="El mismo tamaño en lotes en dos brokers distintos produce riesgos en dólares diez veces diferentes, porque el valor del punto no es el mismo.">
+      <!-- ticket A -->
+      <rect x="24" y="26" width="300" height="176" rx="8" class="d-surf"/>
+      <text x="44" y="54" class="d-tm">BROKER A</text>
+      <line x1="44" y1="66" x2="304" y2="66" class="s-line"/>
+      <text x="44"  y="94"  class="d-t">Instrumento</text>
+      <text x="304" y="94"  text-anchor="end" class="d-t">US100</text>
+      <text x="44"  y="120" class="d-t">Volumen</text>
+      <text x="304" y="120" text-anchor="end" class="d-tb">1.00 lote</text>
+      <text x="44"  y="146" class="d-t">Valor del punto</text>
+      <text x="304" y="146" text-anchor="end" class="d-t">$1</text>
+      <line x1="44" y1="160" x2="304" y2="160" class="s-line"/>
+      <text x="44"  y="186" class="d-t">Riesgo con SL 200 pts</text>
+      <text x="304" y="186" text-anchor="end" class="d-tb f-loss">$200</text>
+
+      <!-- desigual -->
+      <text x="380" y="106" text-anchor="middle" class="d-big">≠</text>
+      <text x="380" y="136" text-anchor="middle" class="d-tm f-acc">10×</text>
+
+      <!-- ticket B -->
+      <rect x="436" y="26" width="300" height="176" rx="8" class="d-surf"/>
+      <text x="456" y="54" class="d-tm">BROKER B</text>
+      <line x1="456" y1="66" x2="716" y2="66" class="s-line"/>
+      <text x="456" y="94"  class="d-t">Instrumento</text>
+      <text x="716" y="94"  text-anchor="end" class="d-t">US100</text>
+      <text x="456" y="120" class="d-t">Volumen</text>
+      <text x="716" y="120" text-anchor="end" class="d-tb">1.00 lote</text>
+      <text x="456" y="146" class="d-t">Valor del punto</text>
+      <text x="716" y="146" text-anchor="end" class="d-t">$10</text>
+      <line x1="456" y1="160" x2="716" y2="160" class="s-line"/>
+      <text x="456" y="186" class="d-t">Riesgo con SL 200 pts</text>
+      <text x="716" y="186" text-anchor="end" class="d-tb f-loss">$2.000</text>
+
+      <text x="380" y="238" text-anchor="middle" class="d-tm">MISMO VOLUMEN · MISMO INSTRUMENTO · RIESGO 10 VECES MAYOR</text>
+    </svg>
+    <figcaption>
+      Cifras de ejemplo. <b>El procedimiento correcto:</b> antes de ejecutar, dejá puesta una orden limit
+      con el volumen que pensás usar en cada cuenta y leé el riesgo que te informa la plataforma
+      <b>en dólares</b>. Ajustá el volumen hasta que los dos lados arriesguen el mismo importe. Recién
+      entonces ejecutás.
+    </figcaption>
+  </figure>
+
+  <!-- ══ 5. Día 1 ══════════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">La jugada completa</p>
+    <h2>Cómo se pasa Fase 1 en un solo día con tres cuentas</h2>
+    <p>
+      Con dos cuentas la cosa se empata. La tercera es la que rompe el empate: cuando una cuenta se queda
+      sin margen diario, la sacás y metés una fresca —con sus 4,5% intactos— para seguir alimentando a la
+      que va ganando.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 880 380" role="img"
+         aria-label="Cuatro rondas de operaciones entre tres cuentas: la cuenta A gana 2% por ronda hasta llegar a +8% y pasar fase 1, mientras la cuenta B se retira al llegar a −4% y la cuenta C entra fresca en la ronda 3.">
+      <!-- cabeceras -->
+      <text x="230" y="34" text-anchor="middle" class="d-tm">RONDA 1</text>
+      <text x="360" y="34" text-anchor="middle" class="d-tm">RONDA 2</text>
+      <text x="490" y="34" text-anchor="middle" class="d-tm">RONDA 3</text>
+      <text x="620" y="34" text-anchor="middle" class="d-tm">RONDA 4</text>
+      <line x1="170" y1="48" x2="700" y2="48" class="s-line" stroke-dasharray="3 4"/>
+
+      <!-- CARRIL B (arriba) -->
+      <text x="24" y="106" class="d-tb">CUENTA B</text>
+      <text x="24" y="124" class="d-tm">EMPRESA 2</text>
+      <line x1="170" y1="110" x2="400" y2="110" class="s-line"/>
+      <line x1="400" y1="110" x2="700" y2="110" class="s-line" stroke-dasharray="4 5"/>
+      <text x="470" y="105" class="d-tm f-acc">SIN MARGEN · FUERA POR HOY</text>
+
+      <!-- CARRIL A (medio) -->
+      <text x="24" y="206" class="d-tb">CUENTA A</text>
+      <text x="24" y="224" class="d-tm">EMPRESA 1</text>
+      <line x1="170" y1="210" x2="700" y2="210" class="s-line"/>
+
+      <!-- CARRIL C (abajo) -->
+      <text x="24" y="300" class="d-tb">CUENTA C</text>
+      <text x="24" y="318" class="d-tm">EMPRESA 3</text>
+      <text x="24" y="336" class="d-tm f-gain">ENTRA EN R3</text>
+      <line x1="170" y1="310" x2="460" y2="310" class="s-line" stroke-dasharray="4 5"/>
+      <line x1="460" y1="310" x2="700" y2="310" class="s-line"/>
+
+      <!-- conectores A↔B -->
+      <line x1="230" y1="122" x2="230" y2="198" class="s-line" stroke-dasharray="3 4"/>
+      <line x1="360" y1="122" x2="360" y2="198" class="s-line" stroke-dasharray="3 4"/>
+      <!-- conectores A↔C -->
+      <line x1="490" y1="222" x2="490" y2="298" class="s-line" stroke-dasharray="3 4"/>
+      <line x1="620" y1="222" x2="620" y2="298" class="s-line" stroke-dasharray="3 4"/>
+
+      <!-- píldoras B -->
+      <rect x="204" y="99" width="52" height="23" rx="4" class="bg-loss"/>
+      <text x="230" y="115" text-anchor="middle" class="d-t f-loss">−2%</text>
+      <rect x="334" y="99" width="52" height="23" rx="4" class="bg-loss"/>
+      <text x="360" y="115" text-anchor="middle" class="d-t f-loss">−2%</text>
+      <text x="230" y="80" text-anchor="middle" class="d-tm">−2%</text>
+      <text x="360" y="80" text-anchor="middle" class="d-tm">−4%</text>
+
+      <!-- píldoras A -->
+      <rect x="204" y="199" width="52" height="23" rx="4" class="bg-gain"/>
+      <text x="230" y="215" text-anchor="middle" class="d-t f-gain">+2%</text>
+      <rect x="334" y="199" width="52" height="23" rx="4" class="bg-gain"/>
+      <text x="360" y="215" text-anchor="middle" class="d-t f-gain">+2%</text>
+      <rect x="464" y="199" width="52" height="23" rx="4" class="bg-gain"/>
+      <text x="490" y="215" text-anchor="middle" class="d-t f-gain">+2%</text>
+      <rect x="594" y="199" width="52" height="23" rx="4" class="bg-gain"/>
+      <text x="620" y="215" text-anchor="middle" class="d-t f-gain">+2%</text>
+      <text x="230" y="248" text-anchor="middle" class="d-tm">+2%</text>
+      <text x="360" y="248" text-anchor="middle" class="d-tm">+4%</text>
+      <text x="490" y="248" text-anchor="middle" class="d-tm">+6%</text>
+      <text x="620" y="248" text-anchor="middle" class="d-tm">+8%</text>
+
+      <!-- píldoras C -->
+      <rect x="464" y="299" width="52" height="23" rx="4" class="bg-loss"/>
+      <text x="490" y="315" text-anchor="middle" class="d-t f-loss">−2%</text>
+      <rect x="594" y="299" width="52" height="23" rx="4" class="bg-loss"/>
+      <text x="620" y="315" text-anchor="middle" class="d-t f-loss">−2%</text>
+      <text x="490" y="345" text-anchor="middle" class="d-tm">−2%</text>
+      <text x="620" y="345" text-anchor="middle" class="d-tm">−4%</text>
+
+      <!-- resultados -->
+      <line x1="722" y1="60" x2="722" y2="350" class="s-line" stroke-dasharray="3 4"/>
+      <text x="744" y="70" class="d-tm">CIERRE DEL DÍA</text>
+      <text x="744" y="115" class="d-tb f-loss">−4,0%</text>
+      <text x="744" y="132" class="d-tm">VIVA</text>
+      <text x="744" y="205" class="d-tb f-gain">+8,0%</text>
+      <text x="744" y="222" class="d-tm f-gain">FASE 1 ✓</text>
+      <text x="744" y="315" class="d-tb f-loss">−4,0%</text>
+      <text x="744" y="332" class="d-tm">VIVA</text>
+    </svg>
+    <figcaption>
+      <b>Escenario donde el precio se mueve en una sola dirección todo el día.</b> B se queda sin margen
+      después de dos trades (−4%: un tercer trade de 2% la pasaría de 4,5%), así que sale y entra C con el
+      contador en cero. Al cierre: una cuenta pasó fase, dos quedaron en −4% pero <b>ninguna quemada</b> — mañana
+      abren con un tope diario nuevo. Si el precio va y viene, los roles se intercambian; la regla igual se
+      mantiene: <b>quien va ganando sigue, quien se queda sin margen se sienta y entra la fresca.</b>
+    </figcaption>
+  </figure>
+
+  <!-- ══ 6. Números ════════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">Traducción a dólares</p>
+    <h2>Los mismos porcentajes en una cuenta de $100.000</h2>
+    <p>El lotaje sale de acá: nunca de un número de lotes fijo, siempre del importe en dólares.</p>
+  </section>
+
+  <section>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Concepto</th>
+            <th scope="col">Porcentaje</th>
+            <th scope="col">En $100.000</th>
+            <th scope="col">Origen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Riesgo y SL por operación</td>
+            <td class="n">2,0%</td>
+            <td class="n"><b>$2.000</b></td>
+            <td>Diego</td>
+          </tr>
+          <tr>
+            <td>Tope diario que usás</td>
+            <td class="n lim">4,5%</td>
+            <td class="n lim"><b>$4.500</b></td>
+            <td>Diego</td>
+          </tr>
+          <tr>
+            <td>Tope diario real — igual en todas las cuentas</td>
+            <td class="n">5,0%</td>
+            <td class="n">$5.000</td>
+            <td>Confirmado</td>
+          </tr>
+          <tr>
+            <td>Colchón por deslizamiento</td>
+            <td class="n">0,5%</td>
+            <td class="n">$500</td>
+            <td>Diego</td>
+          </tr>
+          <tr>
+            <td>Trades perdedores por día antes del tope</td>
+            <td class="n">2</td>
+            <td class="n">$4.000</td>
+            <td>Se deduce</td>
+          </tr>
+          <tr>
+            <td>Margen de una cuenta que ya va +4,5%</td>
+            <td class="n up">9,0%</td>
+            <td class="n up"><b>$9.000</b></td>
+            <td>Diego</td>
+          </tr>
+          <tr>
+            <td>Objetivo Fase 1 <span class="lim">*</span></td>
+            <td class="n">8,0%</td>
+            <td class="n"><b>$8.000</b></td>
+            <td>Típico</td>
+          </tr>
+          <tr>
+            <td>Objetivo Fase 2 <span class="lim">*</span></td>
+            <td class="n">5,0%</td>
+            <td class="n">$5.000</td>
+            <td>Típico</td>
+          </tr>
+          <tr>
+            <td>Pérdida total máxima <span class="lim">*</span></td>
+            <td class="n">10,0%</td>
+            <td class="n">$10.000</td>
+            <td>Típico</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-top:-12px">
+      <span class="lim">*</span> Diego no dio estos tres números en el chat: son los valores habituales de un
+      challenge de dos fases. Confirmalos en el reglamento de cada empresa antes de usarlos, porque de ellos
+      depende cuándo pasás y cuándo quemás.
+    </p>
+  </section>
+
+  <!-- ══ 7. Fase 2 ═════════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">La regla que no se discute</p>
+    <h2>Fase 2 solo contra Fase 2</h2>
+    <p>
+      Cuando preguntaste cómo emparejar una fase 2 contra una fase 1, la respuesta fue de una palabra:
+      <em>«nunca»</em>. Las cuentas se emparejan con su igual.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 760 320" role="img"
+         aria-label="Emparejar dos cuentas en fase 2 es simétrico porque ambas necesitan el mismo objetivo; emparejar una fase 2 contra una fase 1 es asimétrico porque los objetivos son distintos.">
+      <defs>
+        <marker id="f5-a" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto">
+          <polygon points="5,0 10,10 0,10" class="f-acc"/>
+        </marker>
+      </defs>
+
+      <!-- panel izquierdo -->
+      <rect x="20" y="26" width="340" height="228" rx="8" class="d-surf"/>
+      <text x="44" y="54" class="d-tm f-gain">FASE 2 vs FASE 2 · CORRECTO</text>
+      <line x1="44" y1="212" x2="336" y2="212" class="s-line"/>
+      <line x1="90"  y1="142" x2="170" y2="142" class="s-gain" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <line x1="210" y1="142" x2="290" y2="142" class="s-gain" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <line x1="130" y1="210" x2="130" y2="144" class="s-acc" stroke-width="1.5" marker-end="url(#f5-a)"/>
+      <line x1="250" y1="210" x2="250" y2="144" class="s-acc" stroke-width="1.5" marker-end="url(#f5-a)"/>
+      <text x="142" y="182" class="d-tb">+5%</text>
+      <text x="262" y="182" class="d-tb">+5%</text>
+      <text x="130" y="234" text-anchor="middle" class="d-tm">FASE 2</text>
+      <text x="250" y="234" text-anchor="middle" class="d-tm">FASE 2</text>
+      <text x="190" y="294" text-anchor="middle" class="d-t f-gain">Mismo objetivo, mismo valor en juego.</text>
+      <text x="190" y="312" text-anchor="middle" class="d-t f-gain">Lo que una gana, la otra lo necesita igual.</text>
+
+      <!-- panel derecho -->
+      <rect x="400" y="26" width="340" height="228" rx="8" class="d-surf"/>
+      <text x="424" y="54" class="d-tm f-loss">FASE 2 vs FASE 1 · NUNCA</text>
+      <line x1="424" y1="212" x2="716" y2="212" class="s-line"/>
+      <line x1="470" y1="142" x2="550" y2="142" class="s-gain" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <line x1="590" y1="100" x2="670" y2="100" class="s-gain" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <line x1="510" y1="210" x2="510" y2="144" class="s-acc" stroke-width="1.5" marker-end="url(#f5-a)"/>
+      <line x1="630" y1="210" x2="630" y2="102" class="s-acc" stroke-width="1.5" marker-end="url(#f5-a)"/>
+      <text x="522" y="182" class="d-tb">+5%</text>
+      <text x="642" y="160" class="d-tb">+8%</text>
+      <text x="510" y="234" text-anchor="middle" class="d-tm">FASE 2</text>
+      <text x="630" y="234" text-anchor="middle" class="d-tm">FASE 1</text>
+      <text x="570" y="294" text-anchor="middle" class="d-t f-loss">Objetivos distintos y valor distinto:</text>
+      <text x="570" y="312" text-anchor="middle" class="d-t f-loss">la cuenta cara paga para empujar a la barata.</text>
+    </svg>
+    <figcaption>
+      <b>Lo que dijo Diego:</b> fase 2 va contra fase 2, y punto. <b>Lo que se deduce</b> (él no lo explicó):
+      una cuenta en fase 2 ya está a un paso de fondearse y vale mucho más que una en fase 1; emparejarlas
+      significa arriesgar la cara para hacer avanzar a la barata, y encima con objetivos distintos, así que
+      el intercambio nunca queda parejo. Si vas a operar esto, conviene que se lo confirmes.
+    </figcaption>
+  </figure>
+
+  <!-- ══ 8. Recuperación ═══════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">Qué hacés con las que quedaron abajo</p>
+    <h2>Las cuentas negativas no se tiran: se emparejan entre sí</h2>
+    <p>
+      <em>«No se quema, queda negativo»</em>. Mientras no toques el tope diario ni la pérdida total, una cuenta
+      en rojo sigue viva y mañana abre con el contador diario en cero. La rutina de recuperación es emparejar
+      dos negativas de la misma fase para levantar una a breakeven.
+    </p>
+  </section>
+
+  <figure class="breakout">
+    <svg viewBox="0 0 820 210" role="img"
+         aria-label="Tres pasos de recuperación: dos cuentas de fase 1 en menos 4 por ciento se emparejan entre sí, una vuelve a cero y la otra baja a menos 8, y luego se compra una cuenta nueva para volver a tener tres.">
+      <defs>
+        <marker id="f6-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <polygon points="0,0 10,5 0,10" class="f-line2"/>
+        </marker>
+      </defs>
+
+      <rect x="16" y="34" width="238" height="132" rx="8" class="d-surf"/>
+      <text x="38" y="62" class="d-tm">PASO 1 · PUNTO DE PARTIDA</text>
+      <text x="38" y="94" class="d-t">Dos F1 en rojo, ninguna quemada</text>
+      <text x="38" y="130" class="d-tb f-loss">−4%</text>
+      <text x="96" y="130" class="d-tm">y</text>
+      <text x="122" y="130" class="d-tb f-loss">−4%</text>
+
+      <line x1="262" y1="100" x2="288" y2="100" class="s-line" marker-end="url(#f6-a)"/>
+
+      <rect x="296" y="34" width="238" height="132" rx="8" class="d-surf"/>
+      <text x="318" y="62" class="d-tm">PASO 2 · LAS CRUZÁS</text>
+      <text x="318" y="94" class="d-t">Una sube a breakeven, la otra carga</text>
+      <text x="318" y="130" class="d-tb f-gain">0%</text>
+      <text x="366" y="130" class="d-tm">y</text>
+      <text x="392" y="130" class="d-tb f-loss">−8%</text>
+
+      <line x1="542" y1="100" x2="568" y2="100" class="s-line" marker-end="url(#f6-a)"/>
+
+      <rect x="576" y="34" width="238" height="132" rx="8" class="d-surf"/>
+      <text x="598" y="62" class="d-tm">PASO 3 · REPONÉS</text>
+      <text x="598" y="94" class="d-t">Comprás una más y volvés a tres</text>
+      <text x="598" y="130" class="d-tb f-gain">0%</text>
+      <text x="640" y="130" class="d-tm">·</text>
+      <text x="660" y="130" class="d-tb f-loss">−8%</text>
+      <text x="716" y="130" class="d-tm">·</text>
+      <text x="736" y="130" class="d-tb">nueva</text>
+
+      <text x="410" y="196" text-anchor="middle" class="d-tm f-acc">OJO EN EL PASO 2: A −8% QUEDÁS A 2 PUNTOS DE LA PÉRDIDA TOTAL MÁXIMA</text>
+    </svg>
+    <figcaption>
+      <b>Este es el tramo más flojo del chat y conviene repreguntarlo.</b> Llevar una cuenta de −4% a
+      breakeven manda a la otra a −8%, y con un límite de pérdida total del 10% eso deja apenas dos puntos
+      de aire: un solo trade de 2% mal parado la quema. Falta definir qué se hace con esa cuenta hundida —
+      si se sacrifica a propósito o si se recupera después.
+    </figcaption>
+  </figure>
+
+  <!-- ══ 9. Checklist ══════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">Antes de abrir el par</p>
+    <h2>Checklist de ejecución</h2>
+  </section>
+
+  <section>
+    <ul class="check">
+      <li>Las dos cuentas son de <b>empresas distintas</b>.</li>
+      <li>Las dos están en <b>la misma fase</b> — F1 con F1, F2 con F2.</li>
+      <li>Mismo instrumento en las dos: <b>US100</b>, por el spread.</li>
+      <li>Orden <b>limit puesta en las dos plataformas</b> y riesgo leído en dólares, no en lotes.</li>
+      <li>Los dos importes de riesgo dan <b>el mismo número</b>. Si no, ajustás el volumen y volvés a leer.</li>
+      <li>El SL está cargado en <b>2%</b> en ambos lados.</li>
+      <li>Sabés cuánto lleva perdido hoy cada cuenta y <b>cuánto margen le queda hasta 4,5%</b>.</li>
+      <li>Tenés identificada cuál es <b>la cuenta fresca</b> que entra cuando una se quede sin margen.</li>
+      <li>Chequeaste el <b>calendario de noticias</b>: un gap con las dos abiertas puede hacer perder a ambas.</li>
+    </ul>
+  </section>
+
+  <!-- ══ 10. Riesgos ═══════════════════════════════════════════════ -->
+  <section class="sec-head">
+    <p class="eyebrow">Lo que el chat no cubre</p>
+    <h2>Cuatro cosas para verificar por tu cuenta</h2>
+  </section>
+
+  <section>
+    <ol class="steps">
+      <li>
+        <h3>Si la firma permite esto</h3>
+        <p>
+          Muchas prop firms prohíben expresamente la cobertura entre cuentas —incluso entre empresas
+          distintas— y la detectan cruzando timestamps, IP, dispositivo y feed del bróker. La sanción
+          habitual no es perder el challenge sino la anulación del retiro ya ganado. Buscá en el reglamento
+          los términos <em>hedging</em>, <em>group hedging</em>, <em>arbitrage</em> y <em>copy trading</em>.
+        </p>
+      </li>
+      <li>
+        <h3>Cómo calcula tu firma la pérdida diaria</h3>
+        <p>
+          Si se mide desde el saldo de apertura, el colchón de 9% existe. Si se mide desde el equity máximo
+          del día, no existe y el diagrama del margen no aplica.
+        </p>
+      </li>
+      <li>
+        <h3>Cuánto cuesta cada vuelta</h3>
+        <p>
+          Spread y comisión los pagás en las dos cuentas, así que el par nunca cierra exactamente en cero:
+          cierra levemente negativo. Con 4 rondas por día son 8 entradas y 8 salidas. Sacá el número real de
+          tus dos brókers antes de asumir que la suma da cero.
+        </p>
+      </li>
+      <li>
+        <h3>Qué pasa cuando las dos pierden</h3>
+        <p>
+          Deslizamiento, gaps y ampliaciones de spread en noticias pueden llevarse por delante los dos lados
+          a la vez. El 4,5% en lugar de 5% cubre parte de eso, pero no un gap de apertura.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    Armado a partir de la conversación con Diego del 7 de agosto, 14:18–14:35.<br>
+    Los valores marcados como «típicos» y las deducciones señaladas en el texto no salieron del chat.<br>
+    Material de estudio: no es asesoramiento financiero.
+  </footer>
+
+</div>
